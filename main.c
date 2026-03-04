@@ -23,7 +23,12 @@ int main(){
 
     while(1){
         menu();
-        scanf("%d", &opcao);
+        if (scanf("%d", &opcao) != 1) {
+            printf("Entrada invalida.\n");
+            int c;
+            while ((c = getchar()) != '\n' && c != EOF) {} // limpa buffer
+            continue;
+        }
 
         if (opcao == 4){
             printf("Saindo do programa...\n");

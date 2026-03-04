@@ -1,15 +1,28 @@
 #include "utils.h"
 
 void cadastraClientes(Cliente *clientes, int *numClientes) {
+    int idUnico;
     
     if (*numClientes >= 10) {
         printf("Limite de clientes atingido (10).\n");
         return;
     }
+   
     printf("Digite o id do cliente: ");
-    scanf("%d", &clientes[*numClientes].id);
+    scanf("%d", &idUnico);
+
+    for(int i = 0; i < *numClientes; i++){
+        if(clientes[i].id == idUnico){
+            printf("ERRO: ID ja cadastrado. tente novamente. \n");
+            return; // ID já existe, retorna da função
+        }
+    }
+
     printf("Digite o nome do cliente: ");
-    scanf(" %s", clientes[*numClientes].nome); // Lê o nome
+    getchar(); // consome o '\n' que ficou do scanf do ID
+    fgets(clientes[*numClientes].nome, 50, stdin);
+    clientes[*numClientes].nome[strcspn(clientes[*numClientes].nome, "\n")] = 0; // Lê o nome
+    
     printf("Digite a idade do cliente: ");
     scanf("%d", &clientes[*numClientes].idade);
     (*numClientes)++; // Incrementa o número de clientes cadastrados
@@ -33,6 +46,10 @@ void buscaClientes(Cliente *clientes, int numClientes) {
 }
 
 void listaClientes(Cliente *clientes, int numClientes) {
+    if (numClientes == 0) {
+        printf("Nenhum cliente cadastrado.\n");
+        return;
+    }
     
     for(int i = 0; i < numClientes; i++) {
         printf("ID: %d\n Nome: %s\n Idade: %d\n", clientes[i].id, clientes[i].nome, clientes[i].idade);
@@ -46,6 +63,6 @@ void menu() {
     printf("2- buscar cliente\n");
     printf("3- lista com os clientes\n");
     printf("4- sair\n");
-    printf("Digite a opcao desejada:\n ");
+    printf("Digite a opcao desejada: ");
 
 }
