@@ -2,6 +2,7 @@
      sistema de cadastro de cliente e busca de cliente.
      no cadastro tem que ser informado o nome, idade e id do cliente
      quando for fazer a busca deve iforma o id do cliente e o sistema deve mostra o nome e a idade do clinte
+     esse dados vai ser salvos em um arquivo de texto
 */
 #include <stdio.h>
 #include <string.h>
