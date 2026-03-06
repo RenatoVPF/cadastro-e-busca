@@ -8,24 +8,29 @@ void cadastraClientes(Cliente *clientes, int *numClientes) {
         return;
     }
    
-    printf("Digite o id do cliente: ");
+   printf("Digite o id do cliente: ");
     scanf("%d", &idUnico);
 
     for(int i = 0; i < *numClientes; i++){
         if(clientes[i].id == idUnico){
-            printf("ERRO: ID ja cadastrado. tente novamente. \n");
-            return; // ID já existe, retorna da função
+            printf("ERRO: ID ja cadastrado. tente novamente.\n");
+            return;
         }
     }
 
+    clientes[*numClientes].id = idUnico; // Isso corrige o problema de o id do clinte ser 0. 
+
     printf("Digite o nome do cliente: ");
-    getchar(); // consome o '\n' que ficou do scanf do ID
+    getchar();
     fgets(clientes[*numClientes].nome, 50, stdin);
-    clientes[*numClientes].nome[strcspn(clientes[*numClientes].nome, "\n")] = 0; // Lê o nome
-    
+    clientes[*numClientes].nome[strcspn(clientes[*numClientes].nome, "\n")] = 0;
+
     printf("Digite a idade do cliente: ");
     scanf("%d", &clientes[*numClientes].idade);
+
     (*numClientes)++; // Incrementa o número de clientes cadastrados
+    salvarClientes(clientes, *numClientes); // Chama a função para salvar os clientes no arquivo toda vez que um novo cliente for cadastrado,
+                                            // Garantindo que os dados sejam persistidos mesmo após o programa ser encerrado
 }
 
 void buscaClientes(Cliente *clientes, int numClientes) {
@@ -35,7 +40,7 @@ void buscaClientes(Cliente *clientes, int numClientes) {
     printf("Digite o id do cliente que dejeja buscar:\n");
     scanf("%d", &numBusca);
 
-    for (int i = 0; i < numClientes; i++){      //sistema simples de busca, onde vais comparar todos os ids cadastrados com o id que o usuario deseja buscar
+    for (int i = 0; i < numClientes; i++){      //Sistema simples de busca, onde vais comparar todos os ids cadastrados com o id que o usuario deseja buscar
         if(clientes[i].id == numBusca){         // Se o cliente for encontrado, exibe as informações do cliente e retorna da função
             printf("ID: %d\n Nome: %s\n Idade: %d\n", clientes[i].id, clientes[i].nome, clientes[i].idade);
             return; // Cliente encontrado, retorna da função
@@ -65,4 +70,41 @@ void menu() {
     printf("4- sair\n");
     printf("Digite a opcao desejada: ");
 
+}
+
+
+void salvarClientes(Cliente *clientes, int numClientes){
+   
+    FILE *arquivoClie = fopen("dadosClientes.txt", "w");
+
+    if (arquivoClie == NULL){
+        printf("ERRO: não encotramos o arquivo.\n");  // Verifica se o arquivo foi aberto corretamente
+        return;
+    }
+    
+    for(int i = 0; i < numClientes; i++){
+        fprintf(arquivoClie, "%d;%s;%d\n", clientes[i].id, clientes[i].nome, clientes[i].idade); // Escreve os dados do cliente no arquivo
+    }
+
+    fclose(arquivoClie);  // Sempre fecha o arquivo apos a utilização para evitar perda de dados ou corrupção do arquivo ou vazamento de memória.
+}
+
+void carregarClientes(Cliente *clientes, int *numClientes){
+   
+    FILE *arquivoClie = fopen("dadosClientes.txt", "r");
+    if (arquivoClie == NULL){
+        printf("ERRO: não encotramos o arquivo.\n");
+        return; 
+    }
+    
+    while(fscanf(arquivoClie, "%d;%49[^;];%d\n", &clientes[*numClientes].id, clientes[*numClientes].nome, &clientes[*numClientes].idade) == 3){// Lê os dados do arquivo e armazena no array de clientes
+        
+        (*numClientes)++; // Incrementa o número de clientes carregados do arquivo
+        if (*numClientes >= 10) {
+            printf("Limite de clientes atingido (10).\n");
+            break;
+        }
+    }
+    
+    fclose(arquivoClie);
 }

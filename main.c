@@ -17,9 +17,10 @@ int main(){
         printf("Erro: falha ao alocar memoria.\n");
         return 1;
     }
-
+    
     int opcao;
     int numClientes = 0;
+    carregarClientes(clientes, &numClientes);
 
     while(1){
         menu();

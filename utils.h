@@ -7,9 +7,9 @@ utils.h vai servir para colocar os prototipos das funcoes que serao usadas no ma
 #include <string.h>
  
 typedef struct{
+    int id;
     char nome[50];
     int idade;
-    int id;
 } Cliente;
 
 void cadastraClientes(Cliente *clientes, int *numClientes);
@@ -17,5 +17,9 @@ void cadastraClientes(Cliente *clientes, int *numClientes);
 void buscaClientes(Cliente *clientes, int numClientes);
 
 void listaClientes(Cliente *clientes, int numClientes);
+
+void salvarClientes(Cliente *clientes, int numClientes);
+
+void carregarClientes(Cliente *clientes, int *numClientes);
 
 void menu();
