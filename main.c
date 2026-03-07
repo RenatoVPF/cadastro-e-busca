@@ -36,7 +36,7 @@ int main(){
             continue;
         }
 
-        if (opcao == 4){
+        if (opcao == 6){
             printf("Saindo do programa...\n");
             break;
         }
@@ -49,6 +49,15 @@ int main(){
         }
         else if (opcao == 3){
             listaClientes(clientes, numClientes);
+        }
+        else if (opcao == 4){
+            atualizarClientes(clientes, numClientes);
+        }
+        else if (opcao == 5){
+            int idExcluir;
+            printf("Digite o id do cliente que deseja excluir:\n");
+            scanf("%d", &idExcluir);
+            excluirClientes(clientes, &numClientes, idExcluir);
         }
         else{
             printf("Opcao invalida. Tente novamente.\n");

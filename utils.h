@@ -22,4 +22,8 @@ void salvarClientes(Cliente *clientes, int numClientes);
 
 void carregarClientes(Cliente **clientes, int *numClientes, int *capacidade);
 
+void atualizarClientes(Cliente *clientes, int numClientes);
+
+void excluirClientes(Cliente *clientes, int *numClientes, int idExcluir);
+
 void menu();

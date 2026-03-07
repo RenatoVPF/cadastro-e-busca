@@ -72,7 +72,9 @@ void menu() {
     printf("1- cadastrar cliente\n");
     printf("2- buscar cliente\n");
     printf("3- lista com os clientes\n");
-    printf("4- sair\n");
+    printf("4- atualizar cliente\n");
+    printf("5- excluir cliente\n");
+    printf("6- sair\n");
     printf("Digite a opcao desejada: ");
 
 }
@@ -112,4 +114,57 @@ void carregarClientes(Cliente **clientes, int *numClientes, int *capacidade){
     }
     
     fclose(arquivoClie);
+}
+
+void atualizarClientes(Cliente *clientes, int numClientes){
+    int idAtualizar;
+    printf("digite o id do cliente que deseja atualizar:");
+    scanf("%d", &idAtualizar);
+    for (int i = 0; i < numClientes; i++){
+        if (clientes[i].id == idAtualizar){
+            int opcaoAtualizar;
+            printF("dados do cliente encontrado:\n");
+            printf("ID: %d\n Nome: %s\n Idade: %d\n", clientes[i].id, clientes[i].nome, clientes[i].idade);
+            printf("Qual dado deseja atualizar?\n");
+            printf("1- nome\n");
+            printf("2- idade\n");
+            scanf("%d", &opcaoAtualizar);
+            if (opcaoAtualizar == 1){
+                printf("Digite o novo nome do cliente: ");
+                getchar();
+                fgets(clientes[i].nome, 50, stdin);
+                clientes[i].nome[strcspn(clientes[i].nome, "\n")] = 0;
+                salvarClientes(clientes, numClientes); // Salva os clientes no arquivo após a atualização para garantir que os dados sejam persistidos
+                printf("Nome atualizado com sucesso.\n");
+            }
+            else if (opcaoAtualizar == 2){
+                printf("Digite a nova idade do cliente: ");
+                scanf("%d", &clientes[i].idade);
+                salvarClientes(clientes, numClientes); // Salva os clientes no arquivo após a atualização para garantir que os dados sejam persistidos
+                printf("Idade atualizada com sucesso.\n");
+            }
+            else{
+                printf("Opção inválida. Nenhum dado atualizado.\n");
+            }
+        }
+    }
+}
+
+void excluirClientes(Cliente *clientes, int *numClientes, int idExcluir){
+
+    for(int i =  0; i < *numClientes; i++){ // Percorre o array de clientes para encontrar o cliente com o id que o usuário deseja excluir
+
+        if(clientes[i].id == idExcluir){
+
+            for(int j =i; j < *numClientes - 1; j++){ // Se o cliente for encontrado, os clientes seguintes no array são movidos uma posição para trás para preencher o espaço deixado pelo cliente excluído
+
+                clientes[j] = clientes[j + 1]; // Move o cliente seguinte para a posição atual, sobrescrevendo o cliente a ser excluído
+            
+            }
+            (*numClientes)--; // Decrementa o número de clientes cadastrados, já que um cliente foi excluído
+            salvarClientes(clientes, *numClientes); // Salva os clientes no arquivo após a exclusão para garantir que os dados sejam persistidos
+            printf("Cliente excluído com sucesso.\n");
+            return; // Cliente excluído, retorna da função
+        }
+    }
 }
