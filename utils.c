@@ -1,32 +1,37 @@
 #include "utils.h"
 
-void cadastraClientes(Cliente *clientes, int *numClientes) {
+void cadastraClientes(Cliente **clientes, int *numClientes, int *capacidade) {
     int idUnico;
     
-    if (*numClientes >= 10) {
-        printf("Limite de clientes atingido (10).\n");
+    if (*numClientes >= *capacidade) {
+      *capacidade = (*capacidade) * 2;
+      Cliente *temp = realloc(*clientes, (*capacidade) * sizeof(Cliente));
+      if (temp == NULL) {
+        printf("Erro: falha ao realocar memoria.\n");
         return;
+      }
+      *clientes = temp;
     }
    
-   printf("Digite o id do cliente: ");
+    printf("Digite o id do cliente: ");
     scanf("%d", &idUnico);
 
     for(int i = 0; i < *numClientes; i++){
-        if(clientes[i].id == idUnico){
+        if((*clientes)[i].id == idUnico){
             printf("ERRO: ID ja cadastrado. tente novamente.\n");
             return;
         }
     }
 
-    clientes[*numClientes].id = idUnico; // Isso corrige o problema de o id do clinte ser 0. 
+    (*clientes)[*numClientes].id = idUnico; // Isso corrige o problema de o id do clinte ser 0. 
 
     printf("Digite o nome do cliente: ");
     getchar();
-    fgets(clientes[*numClientes].nome, 50, stdin);
-    clientes[*numClientes].nome[strcspn(clientes[*numClientes].nome, "\n")] = 0;
+    fgets((*clientes)[*numClientes].nome, 50, stdin);
+    (*clientes)[*numClientes].nome[strcspn((*clientes)[*numClientes].nome, "\n")] = 0;
 
     printf("Digite a idade do cliente: ");
-    scanf("%d", &clientes[*numClientes].idade);
+    scanf("%d", &(*clientes)[*numClientes].idade);
 
     (*numClientes)++; // Incrementa o número de clientes cadastrados
     salvarClientes(clientes, *numClientes); // Chama a função para salvar os clientes no arquivo toda vez que um novo cliente for cadastrado,
@@ -89,7 +94,7 @@ void salvarClientes(Cliente *clientes, int numClientes){
     fclose(arquivoClie);  // Sempre fecha o arquivo apos a utilização para evitar perda de dados ou corrupção do arquivo ou vazamento de memória.
 }
 
-void carregarClientes(Cliente *clientes, int *numClientes){
+void carregarClientes(Cliente **clientes, int *numClientes, int *capacidade){
    
     FILE *arquivoClie = fopen("dadosClientes.txt", "r");
     if (arquivoClie == NULL){
@@ -97,11 +102,11 @@ void carregarClientes(Cliente *clientes, int *numClientes){
         return; 
     }
     
-    while(fscanf(arquivoClie, "%d;%49[^;];%d\n", &clientes[*numClientes].id, clientes[*numClientes].nome, &clientes[*numClientes].idade) == 3){// Lê os dados do arquivo e armazena no array de clientes
+    while(fscanf(arquivoClie, "%d;%49[^;];%d\n", &(*clientes)[*numClientes].id, (*clientes)[*numClientes].nome, &(*clientes)[*numClientes].idade) == 3){// Lê os dados do arquivo e armazena no array de clientes
         
         (*numClientes)++; // Incrementa o número de clientes carregados do arquivo
-        if (*numClientes >= 10) {
-            printf("Limite de clientes atingido (10).\n");
+        if (*numClientes >= *capacidade) {
+            printf("Limite de clientes atingido (%d).\n", *capacidade);
             break;
         }
     }

@@ -12,7 +12,7 @@ typedef struct{
     int idade;
 } Cliente;
 
-void cadastraClientes(Cliente *clientes, int *numClientes);
+void cadastraClientes(Cliente **clientes, int *numClientes, int *capacidade);
 
 void buscaClientes(Cliente *clientes, int numClientes);
 
@@ -20,6 +20,6 @@ void listaClientes(Cliente *clientes, int numClientes);
 
 void salvarClientes(Cliente *clientes, int numClientes);
 
-void carregarClientes(Cliente *clientes, int *numClientes);
+void carregarClientes(Cliente **clientes, int *numClientes, int *capacidade);
 
 void menu();
