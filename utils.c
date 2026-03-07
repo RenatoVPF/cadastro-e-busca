@@ -123,7 +123,7 @@ void atualizarClientes(Cliente *clientes, int numClientes){
     for (int i = 0; i < numClientes; i++){
         if (clientes[i].id == idAtualizar){
             int opcaoAtualizar;
-            printF("dados do cliente encontrado:\n");
+            printf("dados do cliente encontrado:\n");
             printf("ID: %d\n Nome: %s\n Idade: %d\n", clientes[i].id, clientes[i].nome, clientes[i].idade);
             printf("Qual dado deseja atualizar?\n");
             printf("1- nome\n");
