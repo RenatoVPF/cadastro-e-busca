@@ -1,2 +1,12 @@
 1;Renato Dias;23
-3;julia dias;22
+2;Julia Dias;22
+3;Diogo lima;22
+4;samueka;22
+5;gabriel;21
+6;deyvide santana;24
+7;joao pedro;12
+8;pedro victor;20
+9;marcos teixeira;25
+10;marcelo lapa;31
+11;carlos alberto;66
+12;rachadinha;22

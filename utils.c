@@ -34,7 +34,7 @@ void cadastraClientes(Cliente **clientes, int *numClientes, int *capacidade) {
     scanf("%d", &(*clientes)[*numClientes].idade);
 
     (*numClientes)++; // Incrementa o número de clientes cadastrados
-    salvarClientes(clientes, *numClientes); // Chama a função para salvar os clientes no arquivo toda vez que um novo cliente for cadastrado,
+    salvarClientes(*clientes, *numClientes); // Chama a função para salvar os clientes no arquivo toda vez que um novo cliente for cadastrado,
                                             // Garantindo que os dados sejam persistidos mesmo após o programa ser encerrado
 }
 
@@ -104,13 +104,23 @@ void carregarClientes(Cliente **clientes, int *numClientes, int *capacidade){
         return; 
     }
     
-    while(fscanf(arquivoClie, "%d;%49[^;];%d\n", &(*clientes)[*numClientes].id, (*clientes)[*numClientes].nome, &(*clientes)[*numClientes].idade) == 3){// Lê os dados do arquivo e armazena no array de clientes
-        
-        (*numClientes)++; // Incrementa o número de clientes carregados do arquivo
-        if (*numClientes >= *capacidade) {
-            printf("Limite de clientes atingido (%d).\n", *capacidade);
-            break;
+    while(1){
+
+        if(*numClientes >= *capacidade){
+            *capacidade = (*capacidade) * 2;
+            Cliente *temp = realloc(*clientes, (*capacidade)* sizeof(Cliente));
+            if(temp == NULL){
+                printf("ERRO: falha ao realocar memoria.\n");
+                fclose(arquivoClie);
+                return;
+            }
+            *clientes = temp;
         }
+        int lidos = fscanf(arquivoClie, "%d;%49[^;];%d\n", &(*clientes)[*numClientes].id, (*clientes)[*numClientes].nome, &(*clientes)[*numClientes].idade); // Lê os dados do cliente do arquivo, usando o formato especificado para garantir que os campos sejam lidos corretamente. O %49[^;] é usado para ler o nome do cliente, garantindo que não ultrapasse o limite de 50 caracteres (incluindo o caractere nulo).
+        if (lidos != 3){
+            break; // Se não conseguir ler os 3 campos, significa que chegou ao final do arquivo ou ocorreu um erro, então sai do loop
+        }
+        (*numClientes)++; // Incrementa o número de clientes carregados do arquivo
     }
     
     fclose(arquivoClie);

@@ -25,7 +25,7 @@ int main(){
     }
     
     
-    carregarClientes(clientes, &numClientes, &capacidade); // Carrega os clientes do arquivo ao iniciar o programa, garantindo que os dados persistam entre as execuções
+    carregarClientes(&clientes, &numClientes, &capacidade); // Carrega os clientes do arquivo ao iniciar o programa, garantindo que os dados persistam entre as execuções
 
     while(1){
         menu();
@@ -41,7 +41,7 @@ int main(){
             break;
         }
         else if (opcao == 1){
-            cadastraClientes(clientes, &numClientes, &capacidade);       //aqui é passado o endereço de memoria do numClientes para a função passar o valor atualizado
+            cadastraClientes(&clientes, &numClientes, &capacidade);       //aqui é passado o endereço de memoria do numClientes para a função passar o valor atualizado
                                                             // o numero de clientes cadastrados é atualizado dentro da função cadastraClientes, e como estamos passando o endereço de memoria, a variavel numClientes no main.c também é atualizada com o novo valor
         }
         else if (opcao == 2){
