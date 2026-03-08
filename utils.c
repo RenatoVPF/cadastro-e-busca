@@ -88,6 +88,8 @@ void salvarClientes(Cliente *clientes, int numClientes){
         printf("ERRO: não encotramos o arquivo.\n");  // Verifica se o arquivo foi aberto corretamente
         return;
     }
+
+    fprintf(arquivoClie, "id;nome;idade\n");
     
     for(int i = 0; i < numClientes; i++){
         fprintf(arquivoClie, "%d;%s;%d\n", clientes[i].id, clientes[i].nome, clientes[i].idade); // Escreve os dados do cliente no arquivo
@@ -103,6 +105,9 @@ void carregarClientes(Cliente **clientes, int *numClientes, int *capacidade){
         printf("ERRO: não encotramos o arquivo.\n");
         return; 
     }
+
+    char cabecalho[100];
+    fgets(cabecalho, sizeof(cabecalho), arquivoClie);
     
     while(1){
 
