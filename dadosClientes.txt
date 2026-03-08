@@ -1,4 +1,4 @@
-1;Renato Dias;23
+id;nome;idade
 2;Julia Dias;22
 3;Diogo lima;22
 4;samueka;22
@@ -9,4 +9,4 @@
 9;marcos teixeira;25
 10;marcelo lapa;31
 11;carlos alberto;66
-12;rachadinha;22
+12;matheus martins;22
