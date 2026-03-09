@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "../bibliotecas/utils.h"
 
 void cadastraClientes(Cliente **clientes, int *numClientes, int *capacidade) {
     int idUnico;
