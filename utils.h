@@ -14,7 +14,11 @@ typedef struct{
 
 void cadastraClientes(Cliente **clientes, int *numClientes, int *capacidade);
 
+int encontrarPosicaoInsercao(Cliente *clientes, int numClientes, int id);
+
 void buscaClientes(Cliente *clientes, int numClientes);
+
+int upBuscaBiClientes(Cliente *clientes, int numClientes, int idBusca);
 
 void listaClientes(Cliente *clientes, int numClientes);
 
