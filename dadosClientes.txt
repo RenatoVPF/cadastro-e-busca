@@ -1,4 +1,5 @@
 id;nome;idade
+1;Renato Veloso Dias;23
 2;Julia Dias;22
 3;Diogo lima;22
 4;samueka;22
@@ -10,3 +11,8 @@ id;nome;idade
 10;marcelo lapa;31
 11;carlos alberto;66
 12;matheus martins;22
+13;rena feirtas;23
+14;caio carlos;12
+15;nilson;25
+17;baiamto;34
+20;caio;23
